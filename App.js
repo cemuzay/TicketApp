@@ -2,14 +2,14 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Film from "./src/Film";
 import Music from "./src/Music";
 import Theather from "./src/Theather";
-
 import { NavigationContainer } from "@react-navigation/native";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import MovieDetailScreen from "./DetailedFilmScreens/MovieDetailScreen";
 import Purchase from "./DetailedFilmScreens/Purchase";
 import Payment from "./DetailedFilmScreens/Payment";
+import MusicCardScreen from "./components/MusicCardScreen";
+import MusicDetailScreen from "./MusicDetailScreen/MusicDetailScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack=createStackNavigator();
@@ -19,8 +19,11 @@ const FilmStack =()=>{
        <Stack.Navigator >
         <Stack.Screen name={"film"} component={Film} />
         <Stack.Screen name={"Detay"} component={MovieDetailScreen}/>
-        <Stack.Screen name={"Purchase"} component={Purchase}/>
+        <Stack.Screen name={"Purchase"} component={Purchase} />
         <Stack.Screen name={"Payment"} component={Payment}/>
+        <Stack.Screen name={"MusicCardScreen"} component={MusicCardScreen}/>
+     
+
 
        </Stack.Navigator>
      

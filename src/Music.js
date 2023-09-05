@@ -1,11 +1,10 @@
 import { View, Text,StyleSheet } from 'react-native'
 import React from 'react'
-import Search from '../components/Search';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import CardScreen from '../components/CardScreen';
+import MusicCardScreen from '../components/MusicCardScreen';
 const Music = () => {
   return (
     <View style={styles.Container}>
+      <MusicCardScreen/>
     </View>
  
   )

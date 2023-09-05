@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { data } from '../data/data';
-import Search from './Search';
+import {ConcertData} from '../data/ConcertData';
+import MusicSearch from '../components/MusicSearch';
 
-const CardScreen = () => {
+const MusicCardScreen = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const [ascendingOrder, setAscendingOrder] = useState(true); 
+  const [ascendingOrder, setAscendingOrder] = useState(true);
   const navigation = useNavigation();
 
   const handleSearch = (query) => {
-    const filteredResults = data.filter((item) =>
+    const filteredResults = ConcertData.filter((item) =>
       item.title.toLowerCase().includes(query.toLowerCase())
     );
     setSearchResults(filteredResults);
   };
-  const handleFilter = (query) => {
-    setSearchQuery(query);
-    const filteredResults = data.filter((item) =>
-      item.title.toLowerCase() === query.toLowerCase()
-    );
-    setSearchResults(filteredResults);
-  };
-  
 
   const toggleSortingOrder = () => {
     setAscendingOrder((prevOrder) => !prevOrder);
@@ -43,12 +35,13 @@ const CardScreen = () => {
 
   const renderItem = ({ item }) => (
     <Card style={styles.cardContainer}>
-      <Card.Cover source={item.source} />
+      <Card.Cover source={{ uri: item.source.uri }} />
       <Card.Content>
         <Title>{item.title}</Title>
-        <Paragraph>{item.type}</Paragraph>
-        <Paragraph>{item.duration}</Paragraph>
-        <Paragraph>{item.score}</Paragraph>
+        <Paragraph>{item.paragraph}</Paragraph>
+        <Title>{item.Date}</Title>
+        <Title>{item.Time}</Title>
+        <Title>{item.price}</Title>
         <Button onPress={() => handlePress(item)}>Detay</Button>
       </Card.Content>
     </Card>
@@ -59,10 +52,10 @@ const CardScreen = () => {
   };
 
   return (
-    <View>
-      <Search handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
+    <View style={{ flex: 1 }}>
+      <MusicSearch handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
       <FlatList
-        data={searchResults.length === 0 ? data : sortData(searchResults)}
+        data={searchResults.length === 0 ? ConcertData : sortData(searchResults)}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
@@ -76,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardScreen;
+export default MusicCardScreen;
