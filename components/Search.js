@@ -1,43 +1,42 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Searchbar } from 'react-native-paper';
-import { SafeAreaView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
+import { Searchbar, IconButton } from 'react-native-paper';
 
-const Search = () => {
+const Search = ({ handleSearch, handleFilter }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (query) => {
+  const onSearch = (query) => {
     setSearchQuery(query);
+    handleSearch(query);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Searchbar placeholder='Search' onChangeText={handleSearch} value={searchQuery} style={styles.searchBar} />
-        <Icon name="filter" size={24} color="white" style={styles.filterIcon} />
-      </View>
-    </SafeAreaView>
+    <View style={styles.searchBarContainer}>
+      <Searchbar
+        placeholder="Film Ara..."
+        onChangeText={onSearch}
+        value={searchQuery}
+        style={styles.searchBar}
+      />
+      <IconButton
+        icon="filter"
+        size={24}
+        onPress={handleFilter} 
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor:"white",
-  },
-  header: {
+  searchBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingHorizontal: 16,
+    marginBottom: 16,
   },
   searchBar: {
     flex: 1,
-    marginRight: 10,
-  },
-  filterIcon: {
-    color:'indigo',
   },
 });
 
