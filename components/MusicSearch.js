@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Searchbar, IconButton } from 'react-native-paper';
-import MusicCardScreen from './MusicCardScreen';
 const Search = ({ handleSearch, handleFilter }) => {
   const [searchQuery, setSearchQuery] = useState('');
 

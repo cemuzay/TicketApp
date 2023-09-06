@@ -21,12 +21,18 @@ const FilmStack =()=>{
         <Stack.Screen name={"Detay"} component={MovieDetailScreen}/>
         <Stack.Screen name={"Purchase"} component={Purchase} />
         <Stack.Screen name={"Payment"} component={Payment}/>
-        <Stack.Screen name={"MusicCardScreen"} component={MusicCardScreen}/>
-     
-
 
        </Stack.Navigator>
      
+  )
+}
+const MusicStack =()=>{
+  return(
+<Stack.Navigator>
+  <Stack.Screen name={"MusicCardScreen"} component={MusicCardScreen}/>
+  <Stack.Screen name={"MusicDetailScreen"} component={MusicDetailScreen}/>
+  <Stack.Screen name={"Purchase"} component={Purchase} />
+  </Stack.Navigator>
   )
 }
 export default function App() {
@@ -34,7 +40,6 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator  > 
         <Tab.Screen
-    
           name="Films"
           component={FilmStack}
           options={{
@@ -48,9 +53,9 @@ export default function App() {
         />
         <Tab.Screen
           name="MusicScreen"
-          component={Music}
+          component={MusicStack}
           options={{
-          
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
               <Icon name="music" color={color} size={size} />
             ),

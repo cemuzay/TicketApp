@@ -48,9 +48,8 @@ const MusicCardScreen = () => {
   );
 
   const handlePress = (item) => {
-    navigation.navigate('Detay', { movie: item });
+    navigation.navigate('MusicDetailScreen', { movie: item });
   };
-
   return (
     <View style={{ flex: 1 }}>
       <MusicSearch handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
