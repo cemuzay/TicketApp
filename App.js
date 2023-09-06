@@ -10,6 +10,8 @@ import Purchase from "./DetailedFilmScreens/Purchase";
 import Payment from "./DetailedFilmScreens/Payment";
 import MusicCardScreen from "./components/MusicCardScreen";
 import MusicDetailScreen from "./MusicDetailScreen/MusicDetailScreen";
+import TheatherCardScreen from "./components/TheatherCardScreen";
+import TheatherDetailScreen from "./DetailedTheatherScreens/TheatherDetailScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack=createStackNavigator();
@@ -29,8 +31,18 @@ const FilmStack =()=>{
 const MusicStack =()=>{
   return(
 <Stack.Navigator>
-  <Stack.Screen name={"MusicCardScreen"} component={MusicCardScreen}/>
+  <Stack.Screen name={"Music"} component={MusicCardScreen}/>
   <Stack.Screen name={"MusicDetailScreen"} component={MusicDetailScreen}/>
+  <Stack.Screen name={"Purchase"} component={Purchase} />
+  </Stack.Navigator>
+  )
+}
+const TheatherStack =()=>{
+  return(
+<Stack.Navigator>
+  <Stack.Screen name={"Theather"} component={Theather}/>
+  <Stack.Screen name={"TheatherCardScreen"} component={TheatherCardScreen}/>
+  <Stack.Screen name={"TheatherDetailScreens"} component={TheatherDetailScreen}/>
   <Stack.Screen name={"Purchase"} component={Purchase} />
   </Stack.Navigator>
   )
@@ -63,8 +75,9 @@ export default function App() {
         />
          <Tab.Screen
           name="Theather"
-          component={Theather}
+          component={TheatherStack}
           options={{
+            headerShown:false,
             tabBarIcon: ({ color, size }) => (
               <Icon name="ticket" color={color} size={size} />
             ),

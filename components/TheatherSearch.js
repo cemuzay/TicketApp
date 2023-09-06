@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Searchbar, IconButton } from 'react-native-paper';
-
-const SearchBar = ({ onSearch }) => {
+const TheatherSearch = ({ handleSearch, handleFilter }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (query) => {
+  const onSearch = (query) => {
     setSearchQuery(query);
-    onSearch(query);
+    handleSearch(query);
   };
 
   return (
     <View style={styles.searchBarContainer}>
       <Searchbar
-        placeholder="Film Ara..."
-        onChangeText={handleSearch}
+        placeholder="Tiyatro Ara..."
+        onChangeText={onSearch}
         value={searchQuery}
         style={styles.searchBar}
       />
       <IconButton
         icon="filter"
         size={24}
-        onPress={() => {
-          // Handle filter button press here
-        }}
+        onPress={handleFilter} 
       />
     </View>
   );
@@ -42,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchBar;
+export default TheatherSearch;
