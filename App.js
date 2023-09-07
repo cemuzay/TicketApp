@@ -40,7 +40,7 @@ const MusicStack =()=>{
 const TheatherStack =()=>{
   return(
 <Stack.Navigator>
-  <Stack.Screen name={"Theather"} component={Theather}/>
+  <Stack.Screen name={"Tiyatrolar"} component={Theather}/>
   <Stack.Screen name={"TheatherCardScreen"} component={TheatherCardScreen}/>
   <Stack.Screen name={"TheatherDetailScreens"} component={TheatherDetailScreen}/>
   <Stack.Screen name={"Purchase"} component={Purchase} />

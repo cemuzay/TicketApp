@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { Card, Title, Paragraph, Button, IconButton } from 'react-native-paper'; // Import IconButton
 import { useNavigation } from '@react-navigation/native';
-import {ConcertData} from '../data/ConcertData';
+import { ConcertData } from '../data/ConcertData';
 import MusicSearch from '../components/MusicSearch';
 
 const MusicCardScreen = () => {
@@ -47,14 +47,25 @@ const MusicCardScreen = () => {
     </Card>
   );
 
+  const sortAndFilterData = () => {
+    let dataToSort = searchResults.length === 0 ? ConcertData : [...searchResults];
+    return sortData(dataToSort);
+  };
+
   const handlePress = (item) => {
     navigation.navigate('MusicDetailScreen', { movie: item });
   };
+
   return (
     <View style={{ flex: 1 }}>
       <MusicSearch handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
+      <IconButton
+        icon="filter" 
+        onPress={toggleSortingOrder}
+        style={styles.filterIcon}
+      />
       <FlatList
-        data={searchResults.length === 0 ? ConcertData : sortData(searchResults)}
+        data={sortAndFilterData()}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
@@ -65,6 +76,12 @@ const MusicCardScreen = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     margin: 10,
+  },
+  filterIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'white',
   },
 });
 

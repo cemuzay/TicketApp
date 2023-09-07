@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import React, { useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
+import { Card, Title, Paragraph, Button, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { data } from '../data/data';
 import Search from './Search';
 
 const CardScreen = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const [ascendingOrder, setAscendingOrder] = useState(true); 
+  const [ascendingOrder, setAscendingOrder] = useState(true);
   const navigation = useNavigation();
 
   const handleSearch = (query) => {
@@ -16,14 +16,6 @@ const CardScreen = () => {
     );
     setSearchResults(filteredResults);
   };
-  const handleFilter = (query) => {
-    setSearchQuery(query);
-    const filteredResults = data.filter((item) =>
-      item.title.toLowerCase() === query.toLowerCase()
-    );
-    setSearchResults(filteredResults);
-  };
-  
 
   const toggleSortingOrder = () => {
     setAscendingOrder((prevOrder) => !prevOrder);
@@ -54,6 +46,11 @@ const CardScreen = () => {
     </Card>
   );
 
+  const sortAndFilterData = () => {
+    let dataToSort = searchResults.length === 0 ? data : [...searchResults];
+    return sortData(dataToSort);
+  };
+
   const handlePress = (item) => {
     navigation.navigate('Detay', { movie: item });
   };
@@ -61,8 +58,13 @@ const CardScreen = () => {
   return (
     <View>
       <Search handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
+      <IconButton
+        icon="filter" // You can replace "filter" with the icon you want to use for filtering
+        onPress={toggleSortingOrder}
+        style={styles.filterIcon}
+      />
       <FlatList
-        data={searchResults.length === 0 ? data : sortData(searchResults)}
+        data={sortAndFilterData()}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
@@ -73,6 +75,12 @@ const CardScreen = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     margin: 10,
+  },
+  filterIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'white',
   },
 });
 

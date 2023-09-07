@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { Card, Title, Paragraph, Button, IconButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import {TheatherData} from '../data/TheatherData';
+import { TheatherData } from '../data/TheatherData';
 import TheatherSearch from './TheatherSearch';
 
 const TheatherCardScreen = () => {
@@ -48,14 +48,25 @@ const TheatherCardScreen = () => {
     </Card>
   );
 
+  const sortAndFilterData = () => {
+    let dataToSort = searchResults.length === 0 ? TheatherData : [...searchResults];
+    return sortData(dataToSort);
+  };
+
   const handlePress = (item) => {
     navigation.navigate('TheatherDetailScreens', { movie: item });
   };
+
   return (
     <View style={{ flex: 1 }}>
       <TheatherSearch handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
+      <IconButton
+        icon="filter"
+        onPress={toggleSortingOrder}
+        style={styles.filterIcon}
+      />
       <FlatList
-        data={searchResults.length === 0 ? TheatherData : sortData(searchResults)}
+        data={sortAndFilterData()}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
       />
@@ -66,6 +77,12 @@ const TheatherCardScreen = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     margin: 10,
+  },
+  filterIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'white',
   },
 });
 
