@@ -14,7 +14,7 @@ const MusicDetailScreen = ({ route }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Card style={{ flex: 1 }}>
+      <Card >
         <Card.Cover source={movie.source} />
         <Card.Content>
           <Title>{movie.title}</Title>

@@ -23,7 +23,6 @@ const FilmStack =()=>{
         <Stack.Screen name={"Detay"} component={MovieDetailScreen}/>
         <Stack.Screen name={"Purchase"} component={Purchase} />
         <Stack.Screen name={"Payment"} component={Payment}/>
-
        </Stack.Navigator>
      
   )
