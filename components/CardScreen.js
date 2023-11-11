@@ -59,7 +59,7 @@ const CardScreen = () => {
     <View>
       <Search handleSearch={handleSearch} handleFilter={toggleSortingOrder} />
       <IconButton
-        icon="filter" // You can replace "filter" with the icon you want to use for filtering
+        icon="filter" 
         onPress={toggleSortingOrder}
         style={styles.filterIcon}
       />

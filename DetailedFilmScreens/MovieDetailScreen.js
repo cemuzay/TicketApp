@@ -32,6 +32,7 @@ const MovieDetailScreen = ({ route }) => {
               Geri Dön
             </Button>
           </View>
+          
         </Card.Content>
       </Card>
       <MapView

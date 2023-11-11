@@ -5,32 +5,67 @@ import { faCouch } from '@fortawesome/free-solid-svg-icons';
 import { Button, Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
+const CouchSelection = ({ showtime, selectedCouches, handleCouchSelect }) => {
+  const couches = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+  const isCouchSelected = (couch) => selectedCouches.includes(couch);
+
+  return (
+    <View style={styles.couchContainer}>
+      {couches.map((couch, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => handleCouchSelect(showtime.time, couch)}
+          style={[
+            styles.couchIcon,
+            isCouchSelected(couch) && styles.selectedCouchIcon,
+          ]}
+        >
+          <FontAwesomeIcon
+            icon={faCouch}
+            size={30}
+            style={{ color: isCouchSelected(couch) ? 'red' : 'black' }}
+          />
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
 const Purchase = () => {
   const showtimes = [
-    { time: '11:00', couch: 'A' },
-    { time: '13:30', couch: 'B' },
-    { time: '16:15', couch: 'C' },
-    { time: '18:00', couch: 'D' },
+    { time: '11:00' },
+    { time: '13:30' },
+    { time: '16:15' },
+    { time: '18:00' },
   ];
 
   const navigation = useNavigation();
   const [selectedShowtime, setSelectedShowtime] = useState(null);
-  const [selectedCouch, setSelectedCouch] = useState(null); 
+  const [selectedCouches, setSelectedCouches] = useState({});
 
   const handleShowtimeSelect = (time) => {
     setSelectedShowtime(time);
   };
 
-  const handleCouchSelect = (couch) => {
-    setSelectedCouch(couch); 
+  const handleCouchSelect = (time, couch) => {
+    setSelectedCouches((prev) => {
+      const isSelected = prev[time]?.includes(couch);
+
+      if (isSelected) {
+      
+        const updatedCouches = { ...prev };
+        updatedCouches[time] = updatedCouches[time].filter((selectedCouch) => selectedCouch !== couch);
+        return updatedCouches;
+      } else {
+        return { ...prev, [time]: [...(prev[time] || []), couch] };
+      }
+    });
   };
 
   const handlePressPay = () => {
-    if (selectedShowtime && selectedCouch) {
-      navigation.navigate('Payment'); 
-    } else {
-      alert('Please select a showtime and a couch before proceeding.');
-    }
+   
+      navigation.navigate('Payment');
   };
 
   return (
@@ -51,27 +86,19 @@ const Purchase = () => {
             <Card style={styles.cardStyle}>
               <View style={styles.showtimeInfo}>
                 <Text style={styles.timeText}>{showtime.time}</Text>
-                <Text>{showtime.couch}</Text>
-                <Text>{showtime.price}</Text>
               </View>
             </Card>
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.couchContainer}>
-        {showtimes.map((showtime, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handleCouchSelect(showtime.couch)} 
-            style={[
-              styles.couchIcon,
-              selectedCouch === showtime.couch && styles.selectedCouchIcon,
-            ]}
-          >
-            <FontAwesomeIcon icon={faCouch} size={30} style={{ color: selectedCouch === showtime.couch ? 'red' : 'black' }} />
-          </TouchableOpacity>
-        ))}
-      </View>
+      {showtimes.map((showtime, index) => (
+        <CouchSelection
+          key={index}
+          showtime={showtime}
+          selectedCouches={selectedCouches[showtime.time] || []}
+          handleCouchSelect={handleCouchSelect}
+        />
+      ))}
       <View>
         <Button onPress={handlePressPay}>Tıkla</Button>
       </View>
@@ -99,16 +126,18 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   selectedShowtime: {
-    borderColor: 'blue', 
+    borderColor: 'blue',
   },
   cardStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+   
+
     paddingHorizontal: 10,
   },
   showtimeInfo: {
-    flexDirection: 'column', 
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -121,7 +150,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   selectedCouchIcon: {
-    borderColor: 'blue', 
+    borderColor: 'blue',
   },
 });
 
